@@ -12,6 +12,9 @@ public final class VeltrixClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        BlockHighlightSettings.load();
+        BlockHighlightRenderer.register();
+
         openMenuKey = KeyBindingHelper.registerKeyBinding(new KeyMapping(
                 "key.veltrix.open_menu",
                 GLFW.GLFW_KEY_RIGHT_SHIFT,
