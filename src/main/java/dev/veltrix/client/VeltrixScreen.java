@@ -68,13 +68,13 @@ public final class VeltrixScreen extends Screen {
         }
 
         g.drawString(font, "CLICK A CARD TO TOGGLE ITS UI STATE", cx, top + ph - 42, MUTED, false);
-        g.drawString(font, "Module behavior is being implemented in stages.", cx, top + ph - 27, MUTED, false);
+        g.drawString(font, "Block Highlight: click = toggle · F = fill · right-click = rainbow · middle-click = color", cx, top + ph - 27, MUTED, false);
         g.drawString(font, "VELTRIX  •  0.1.1", left + 24, top + ph - 27, MUTED, false);
         super.render(g, mouseX, mouseY, partialTick);
     }
 
     private void drawCard(GuiGraphics g, int x, int y, int w, VeltrixModules.Module module, int mx, int my) {
-        boolean enabled = ENABLED.contains(module.name());
+        boolean enabled = module.name().equals("Custom Block Highlight") ? BlockHighlightSettings.enabled : ENABLED.contains(module.name());
         boolean hover = mx >= x && mx <= x + w && my >= y && my <= y + 94;
         g.fill(x, y, x + w, y + 94, hover ? 0xFF252D3B : PANEL_ALT);
         g.fill(x, y, x + w, y + 1, enabled ? ACCENT : BORDER);
@@ -82,6 +82,11 @@ public final class VeltrixScreen extends Screen {
         g.drawString(font, "✦", x + 20, y + 20, enabled ? ACCENT : MUTED, false);
         g.drawString(font, module.name(), x + 12, y + 46, TEXT, false);
         g.drawString(font, module.description(), x + 12, y + 62, MUTED, false);
+        if (module.name().equals("Custom Block Highlight")) {
+            g.fill(x + w - 29, y + 39, x + w - 13, y + 55, BORDER);
+            g.drawString(font, "F", x + w - 24, y + 43, BlockHighlightSettings.fillEnabled ? ACCENT : MUTED, false);
+            g.drawString(font, BlockHighlightSettings.rainbow ? "RAINBOW" : "CUSTOM", x + 12, y + 78, ACCENT, false);
+        }
         int sw = 32, sh = 13, tx = x + w - sw - 12, ty = y + 13;
         g.fill(tx, ty, tx + sw, ty + sh, enabled ? 0xFF496D9E : BORDER);
         g.fill(enabled ? tx + 19 : tx + 3, ty + 2, enabled ? tx + 29 : tx + 13, ty + 11, TEXT);
