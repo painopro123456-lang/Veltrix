@@ -69,6 +69,17 @@ public final class BlockHighlightSettings {
     public static void toggleRainbow() { rainbow = !rainbow; save(); }
     public static void toggleSmooth() { smooth = !smooth; save(); }
 
+    public static void adjustWidth(float amount) {
+        outlineWidth = clamp(outlineWidth + amount, 0.5f, 8.0f);
+        save();
+    }
+
+    public static void adjustFillOpacity(float amount) {
+        fillOpacity = clamp(fillOpacity + amount, 0.02f, 0.8f);
+        fillColor = ((int) (fillOpacity * 255.0f) << 24) | (fillColor & 0x00FFFFFF);
+        save();
+    }
+
     public static void cycleColor() {
         int[] colors = {0xFF82B5FF, 0xFFB58CFF, 0xFFFFC46B, 0xFF72E0B1, 0xFFFF8299};
         int next = 0;
