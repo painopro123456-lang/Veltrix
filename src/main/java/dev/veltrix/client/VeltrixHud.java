@@ -10,6 +10,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import org.lwjgl.glfw.GLFW;
 
 public final class VeltrixHud {
     private static final int INK = 0xFF263447;
@@ -58,6 +59,24 @@ public final class VeltrixHud {
             graphics.fill(8, y, 10, y + 17, 0xFF91B5DF);
             graphics.text(client.font, line, 15, y + 5, INK, false);
             y += 21;
+        }
+
+        if (VeltrixModuleState.isEnabled("Keystrokes")) {
+            long window = client.getWindow().getWindow();
+            String[] keys = {"W", "A", "S", "D"};
+            int[] codes = {GLFW.GLFW_KEY_W, GLFW.GLFW_KEY_A, GLFW.GLFW_KEY_S, GLFW.GLFW_KEY_D};
+            int startX = 8;
+            int keyY = y + 2;
+            for (int i = 0; i < keys.length; i++) {
+                boolean down = GLFW.glfwGetKey(window, codes[i]) == GLFW.GLFW_PRESS;
+                int bx = i == 0 ? startX + 23 : startX + ((i - 1) % 3) * 23;
+                int by = keyY + (i == 0 ? 0 : 22);
+                graphics.fill(bx, by, bx + 20, by + 19, down ? 0xDDA8C7EE : GLASS);
+                graphics.text(client.font, keys[i], bx + 7, by + 5, INK, false);
+            }
+            boolean jump = GLFW.glfwGetKey(window, GLFW.GLFW_KEY_SPACE) == GLFW.GLFW_PRESS;
+            graphics.fill(startX, keyY + 44, startX + 66, keyY + 62, jump ? 0xDDA8C7EE : GLASS);
+            graphics.text(client.font, "SPACE", startX + 20, keyY + 49, INK, false);
         }
     }
 }
