@@ -1,5 +1,6 @@
 package dev.veltrix.client;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import org.lwjgl.glfw.GLFW;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -21,6 +22,7 @@ public final class VeltrixClient implements ClientModInitializer {
         );
         openMenuKey = KeyMappingHelper.registerKeyMapping(new KeyMapping(
                 "key.veltrix.open_menu",
+                InputConstants.Type.KEYSYM,
                 GLFW.GLFW_KEY_RIGHT_SHIFT,
                 category
         ));
