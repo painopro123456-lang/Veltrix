@@ -67,7 +67,7 @@ public final class VeltrixScreen extends Screen {
             visible++;
         }
 
-        g.drawString(font, "CLICK A CARD TO TOGGLE ITS UI STATE", cx, top + ph - 42, MUTED, false);
+        g.drawString(font, "CUSTOM BLOCK HIGHLIGHT CONTROLS", cx, top + ph - 42, MUTED, false);
         g.drawString(font, "Block Highlight: click = toggle · F = fill · right-click = rainbow · middle-click = color", cx, top + ph - 27, MUTED, false);
         g.drawString(font, "VELTRIX  •  0.1.1", left + 24, top + ph - 27, MUTED, false);
         super.render(g, mouseX, mouseY, partialTick);
@@ -118,7 +118,19 @@ public final class VeltrixScreen extends Screen {
             int x = cx + (visible % 3) * (cw + gap);
             int y = cardY + (visible / 3) * 112;
             if (mouseX >= x && mouseX <= x + cw && mouseY >= y && mouseY <= y + 94) {
-                if (!ENABLED.add(module.name())) ENABLED.remove(module.name());
+                if (module.name().equals("Custom Block Highlight")) {
+                    if (mouseX >= x + cw - 34 && mouseY >= y + 36 && mouseY <= y + 60) {
+                        BlockHighlightSettings.toggleFill();
+                    } else if (button == 1) {
+                        BlockHighlightSettings.toggleRainbow();
+                    } else if (button == 2) {
+                        BlockHighlightSettings.cycleColor();
+                    } else {
+                        BlockHighlightSettings.toggleEnabled();
+                    }
+                } else if (!ENABLED.add(module.name())) {
+                    ENABLED.remove(module.name());
+                }
                 return true;
             }
             visible++;
