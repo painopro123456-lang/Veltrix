@@ -68,7 +68,7 @@ public final class VeltrixScreen extends Screen {
         }
 
         g.drawString(font, "CUSTOM BLOCK HIGHLIGHT CONTROLS", cx, top + ph - 42, MUTED, false);
-        g.drawString(font, "Block Highlight: click = toggle · F = fill · right-click = rainbow · middle-click = color", cx, top + ph - 27, MUTED, false);
+        g.drawString(font, "Block Highlight: click = toggle · F = fill · scroll = width/opacity · right-click = rainbow · middle-click = color", cx, top + ph - 27, MUTED, false);
         g.drawString(font, "VELTRIX  •  0.1.1", left + 24, top + ph - 27, MUTED, false);
         super.render(g, mouseX, mouseY, partialTick);
     }
@@ -85,7 +85,7 @@ public final class VeltrixScreen extends Screen {
         if (module.name().equals("Custom Block Highlight")) {
             g.fill(x + w - 29, y + 39, x + w - 13, y + 55, BORDER);
             g.drawString(font, "F", x + w - 24, y + 43, BlockHighlightSettings.fillEnabled ? ACCENT : MUTED, false);
-            g.drawString(font, BlockHighlightSettings.rainbow ? "RAINBOW" : "CUSTOM", x + 12, y + 78, ACCENT, false);
+            g.drawString(font, (BlockHighlightSettings.rainbow ? "RAINBOW" : "CUSTOM") + "  " + String.format("%.1f", BlockHighlightSettings.outlineWidth) + "px", x + 12, y + 78, ACCENT, false);
         }
         int sw = 32, sh = 13, tx = x + w - sw - 12, ty = y + 13;
         g.fill(tx, ty, tx + sw, ty + sh, enabled ? 0xFF496D9E : BORDER);
@@ -136,6 +136,34 @@ public final class VeltrixScreen extends Screen {
             visible++;
         }
         return super.mouseClicked(mouseX, mouseY, button);
+    }
+
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
+        int pw = Math.min(960, this.width - 32);
+        int ph = Math.min(620, this.height - 28);
+        int left = (this.width - pw) / 2, top = (this.height - ph) / 2;
+        int cx = left + 190, cardY = top + 139, gap = 10;
+        int cw = (pw - 190 - 40 - gap * 2) / 3;
+        int visible = 0, index = 0;
+        for (VeltrixModules.Module module : VeltrixModules.ALL) {
+            if (!selectedCategory.equals("All") && !selectedCategory.equals(module.category())) continue;
+            if (index++ < firstVisible) continue;
+            if (visible >= 9) break;
+            int x = cx + (visible % 3) * (cw + gap);
+            int y = cardY + (visible / 3) * 112;
+            if (module.name().equals("Custom Block Highlight")
+                    && mouseX >= x && mouseX <= x + cw && mouseY >= y && mouseY <= y + 94) {
+                if (mouseX >= x + cw - 34 && mouseY >= y + 36 && mouseY <= y + 60) {
+                    BlockHighlightSettings.adjustFillOpacity(verticalAmount * 0.04f);
+                } else {
+                    BlockHighlightSettings.adjustWidth(verticalAmount * 0.25f);
+                }
+                return true;
+            }
+            visible++;
+        }
+        return super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);
     }
 
     @Override
