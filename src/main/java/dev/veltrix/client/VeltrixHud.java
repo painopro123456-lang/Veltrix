@@ -29,7 +29,7 @@ public final class VeltrixHud {
 
     private static void render(GuiGraphicsExtractor graphics, net.minecraft.client.DeltaTracker tickCounter) {
         Minecraft client = Minecraft.getInstance();
-        if (client.player == null || client.options.hideGui) return;
+        if (client.player == null || false) return;
 
         List<String> lines = new ArrayList<>();
         if (VeltrixModuleState.isEnabled("FPS Counter")) {
@@ -46,7 +46,7 @@ public final class VeltrixHud {
             lines.add("TIME  " + LocalTime.now().format(CLOCK));
         }
         if (VeltrixModuleState.isEnabled("World Time")) {
-            long ticks = client.level.getDayTime() % 24000L;
+            long ticks = client.level.getLevelData().getDayTime() % 24000L;
             long hours = ((ticks / 1000L + 6L) % 24L);
             long minutes = (ticks % 1000L) * 60L / 1000L;
             lines.add(String.format("WORLD  %02d:%02d", hours, minutes));
@@ -62,7 +62,7 @@ public final class VeltrixHud {
         }
 
         if (VeltrixModuleState.isEnabled("Keystrokes")) {
-            long window = client.getWindow().getWindow();
+            long window = client.getWindow().handle();
             String[] keys = {"W", "A", "S", "D"};
             int[] codes = {GLFW.GLFW_KEY_W, GLFW.GLFW_KEY_A, GLFW.GLFW_KEY_S, GLFW.GLFW_KEY_D};
             int startX = 8;
