@@ -47,6 +47,7 @@ public final class VeltrixModules {
         add("Weather Visuals", "Visuals", "Client-side weather presentation");
         add("Zoom", "Visuals", "Configurable camera zoom");
         add("Damage Tint", "Visuals", "Customize damage flash");
+        add("Custom Block Highlight", "Visuals", "Custom outline, face fill and rainbow colors");
 
         add("Chunk Updates", "Performance", "Client rendering performance controls");
         add("Entity Culling", "Performance", "Avoid rendering hidden entities");
