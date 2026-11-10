@@ -13,7 +13,7 @@ Veltrix takes inspiration from the qualities that make Lunar Client cohesive: cl
 - Dark, glass-inspired panel layout and category navigation.
 - Starter module cards for the UI foundation.
 
-The starter cards are not yet functional modules. Each feature will be marked as implemented only after its behavior and settings are connected.
+The catalogue includes planned modules; only features with connected behavior should be treated as implemented.\n\n## Implemented feature: Custom Block Highlight\n\n- Replaces the vanilla targeted-block outline with a configurable outline.\n- Optional translucent face fill.\n- Static colour presets and animated rainbow outline.\n- Smooth target movement interpolation.\n- Settings persist in `config/veltrix-block-highlight.properties`.\n- In the Visuals category: click the card to enable/disable, click the small `F` control to toggle fill, right-click to toggle rainbow, and middle-click to cycle outline colours.
 
 ## Build
 
