@@ -16,6 +16,7 @@ public final class VeltrixClient implements ClientModInitializer {
     public void onInitializeClient() {
         BlockHighlightSettings.load();
         BlockHighlightRenderer.register();
+        VeltrixHud.register();
 
         KeyMapping.Category category = KeyMapping.Category.register(
                 Identifier.fromNamespaceAndPath("veltrix", "main")
