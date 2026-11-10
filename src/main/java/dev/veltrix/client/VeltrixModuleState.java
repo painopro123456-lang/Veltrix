@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class VeltrixModuleState {
     private static final Set<String> ENABLED = ConcurrentHashMap.newKeySet();
     private static final Set<String> IMPLEMENTED = Set.of(
-            "FPS Counter", "Coordinates", "Direction HUD", "Clock", "World Time", "Keystrokes",
+            "FPS Counter", "Coordinates", "Direction HUD", "Clock", "Keystrokes",
             "Custom Block Highlight"
     );
 
