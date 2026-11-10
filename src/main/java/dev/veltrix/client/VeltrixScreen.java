@@ -78,7 +78,7 @@ public final class VeltrixScreen extends Screen {
         boolean enabled = module.name().equals("Custom Block Highlight")
                 ? BlockHighlightSettings.enabled : VeltrixModuleState.isEnabled(module.name());
         boolean hover = mx >= x && mx <= x + w && my >= y && my <= y + 60;
-        g.fill(x, y, x + w, y + 68, hover ? CARD_HOVER : CARD);
+        g.fill(x, y, x + w, y + 60, hover ? CARD_HOVER : CARD);
         g.outline(x, y, w, 60, BORDER);
         g.fill(x + 10, y + 8, x + 31, y + 29, enabled ? 0xFFDCEBFA : 0xFFE9EEF4);
         g.text(font, "✦", x + 16, y + 17, enabled ? ACCENT : MUTED, false);
@@ -103,12 +103,12 @@ public final class VeltrixScreen extends Screen {
     public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
         double mouseX = event.x(), mouseY = event.y();
         int button = event.button();
-        int pw = Math.min(780, this.width - 24);
-        int ph = Math.min(500, this.height - 24);
+        int pw = Math.min(650, this.width - 32);
+        int ph = Math.min(420, this.height - 32);
         int left = (this.width - pw) / 2, top = (this.height - ph) / 2;
-        int sx = left + 14, sy = top + 65;
+        int sx = left + 12, sy = top + 65;
         for (int i = 0; i < CATEGORIES.length; i++) {
-            int y = sy + i * 30;
+            int y = sy + i * 27;
             if (mouseX >= sx && mouseX <= sx + 108 && mouseY >= y - 6 && mouseY <= y + 17) {
                 selectedCategory = CATEGORIES[i];
                 firstVisible = 0;
@@ -147,15 +147,15 @@ public final class VeltrixScreen extends Screen {
         int pw = Math.min(780, this.width - 24);
         int ph = Math.min(500, this.height - 24);
         int left = (this.width - pw) / 2, top = (this.height - ph) / 2;
-        int cx = left + 150, cardY = top + 111, gap = 10;
-        int cw = (pw - 150 - 30 - gap) / 2;
+        int cx = left + 132, cardY = top + 96, gap = 8;
+        int cw = (pw - 132 - 24 - gap) / 2;
         int visible = 0, index = 0;
         for (VeltrixModules.Module module : VeltrixModules.ALL) {
             if (!selectedCategory.equals("All") && !selectedCategory.equals(module.category())) continue;
             if (index++ < firstVisible) continue;
             if (visible >= 8) break;
             int x = cx + (visible % 2) * (cw + gap);
-            int y = cardY + (visible / 2) * 78;
+            int y = cardY + (visible / 2) * 68;
             if (module.name().equals("Custom Block Highlight")
                     && mouseX >= x && mouseX <= x + cw && mouseY >= y && mouseY <= y + 60) {
                 if (mouseX >= x + cw - 61 && mouseY >= y + 40)
